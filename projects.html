@@ -271,23 +271,41 @@ nav{
 /* ── STEPPER ────────────────────────────────────────────────────── */
 .stepper{display:flex;flex-direction:column;gap:0;}
 .step{
-  display:grid;grid-template-columns:52px 1fr;gap:0 20px;
+  display:grid;
+  grid-template-columns:52px 1fr;
+  grid-template-rows:auto;
+  gap:0 20px;
   position:relative;
 }
-.step:not(:last-child) .step-line{
-  position:absolute;left:26px;top:52px;
-  width:2px;height:calc(100% - 16px);
-  background:linear-gradient(to bottom,var(--green),var(--border));
-}
+/* step-num: column 1, row 1 — the numbered circle */
 .step-num{
+  grid-column:1;
+  grid-row:1;
   width:52px;height:52px;border-radius:50%;
   background:var(--navy);color:#fff;
   display:flex;align-items:center;justify-content:center;
   font-family:var(--narrow);font-size:1.1rem;font-weight:bold;
-  flex-shrink:0;z-index:1;box-shadow:0 0 0 4px var(--cream);
+  flex-shrink:0;z-index:1;
+  box-shadow:0 0 0 4px var(--cream);
+  align-self:start;
 }
 [data-theme="dark"] .step-num{box-shadow:0 0 0 4px var(--cream);}
-.step-content{padding:12px 0 32px;}
+/* step-line: absolutely positioned — removed from grid flow entirely */
+.step:not(:last-child) .step-line{
+  position:absolute;
+  left:26px;top:52px;
+  width:2px;height:calc(100% - 16px);
+  background:linear-gradient(to bottom,var(--green),var(--border));
+  z-index:0;
+}
+/* step-line must NOT act as a grid item — use display:none on :last-child */
+.step:last-child .step-line{display:none;}
+/* step-content: always column 2, always row 1 — never displaced */
+.step-content{
+  grid-column:2;
+  grid-row:1;
+  padding:12px 0 32px;
+}
 .step-content h3{color:var(--navy);font-size:1.02rem;margin-bottom:6px;}
 [data-theme="dark"] .step-content h3{color:#7fb4ff;}
 .step-content p{color:var(--ink-soft);font-size:.93rem;}
@@ -483,8 +501,8 @@ footer p+p{margin-top:6px;opacity:.7;font-size:.8rem;}
       <div class="step-num">3</div>
       <div class="step-line"></div>
       <div class="step-content">
-        <h3>Pilot in the Classroom or Institution (Spring Semester)</h3>
-        <p>Deploy your AI-integrated resource in at least one live course section or institution sub division. Collect feedback data and document outcomes. Refine based on real classroom or operational evidence.</p>
+        <h3>Pilot in the Classroom (Spring Semester)</h3>
+        <p>Deploy your AI-integrated resource in at least one live course section. Collect student feedback data and document outcomes. Refine based on real classroom evidence.</p>
       </div>
     </div>
 
